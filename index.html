@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Enhanced JavaScript Tasks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f4f4f9;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        #infoForm {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #infoForm input {
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #infoResult {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #image {
+            max-width: 100%;
+            max-height: 150px;
+            border-radius: 8px;
+        }
+
+        #textBlock {
+            font-size: 18px;
+            color: #333;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #clock {
+            font-size: 18px;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .result-table th,
+        .result-table td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .result-table th {
+            background-color: #007BFF;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 1. Basic Info Form -->
+    <h2>1. Basic Information Form</h2>
+    <form id="infoForm" onsubmit="showInfo(event)">
+        Name: <input type="text" id="name" required><br><br>
+        Email: <input type="email" id="email" required><br><br>
+        Age: <input type="number" id="age" required><br><br>
+        <button type="submit">Submit</button>
+        <button type="button" onclick="resetForm()">Reset</button>
+    </form>
+
+    <!-- 2. Show Submitted Data -->
+    <div id="infoResult"></div>
+
+    <hr>
+
+
+    <!-- 3. Change Image -->
+    <h2>2. Change Image on Button Click</h2>
+    <img id="image"
+        src="https://img.freepik.com/premium-photo/japanese-girl-cherry-blossom-tree-landscape-anime-manga-illustration_691560-7776.jpg?w=2000"
+        alt="Sample Image">
+    <br><br>
+    <button onclick="changeImage()">Change Image</button>
+
+    <hr>
+
+    <!-- 4. Font Size Increase/Decrease -->
+    <h2>3. Increase / Decrease Font Size</h2>
+    <div id="textBlock">This is sample text. Click buttons to change the font size.</div>
+    <button onclick="changeFontSize(2)">Increase Font Size</button>
+    <button onclick="changeFontSize(-2)">Decrease Font Size</button>
+
+    <hr>
+
+    <!-- 5. Show Current Date and Time -->
+    <h2>4. Current Date and Time</h2>
+    <div id="clock"></div>
+
+    <script>
+        // Task 1: Show form data in table format
+        let entries = [];
+        function showInfo(event) {
+            event.preventDefault(); // Prevent form refresh
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const age = document.getElementById('age').value;
+
+            entries.push({ name, email, age });
+
+            let table = "<h3>Submitted Information:</h3>";
+            table += "<table class='result-table'><tr><th>Name</th><th>Email</th><th>Age</th></tr>";
+
+            entries.forEach(entry => {
+                table += `<tr><td>${entry.name}</td><td>${entry.email}</td><td>${entry.age}</td></tr>`;
+            });
+
+            table += "</table>";
+            document.getElementById('infoResult').innerHTML = table;
+        }
+
+
+        // // Task 2: Change Image
+        // function changeImage() {
+        //     const img = document.getElementById('image');
+        //     const newSrc = "https://images.wallpapersden.com/image/download/anime-naruto-hd-2023-ai_bW5mbGmUmZqaraWkpJRmbmdlrWZlbWU.jpg";
+        //     const originalSrc = "https://img.freepik.com/premium-photo/japanese-girl-cherry-blossom-tree-landscape-anime-manga-illustration_691560-7776.jpg";
+
+        //     // Toggle the image source on button click
+        //     img.src = img.src === originalSrc ? newSrc : originalSrc;
+        // }
+        // Task 2: Change Image
+        let isOriginalImage = true; // Track the current image state
+
+        function changeImage() {
+            const img = document.getElementById('image');
+            const newSrc = "https://images.wallpapersden.com/image/download/anime-naruto-hd-2023-ai_bW5mbGmUmZqaraWkpJRmbmdlrWZlbWU.jpg";
+            const originalSrc = "https://img.freepik.com/premium-photo/japanese-girl-cherry-blossom-tree-landscape-anime-manga-illustration_691560-7776.jpg";
+
+            // Toggle the image source based on the state
+            img.src = isOriginalImage ? newSrc : originalSrc;
+            isOriginalImage = !isOriginalImage; // Update the state
+        }
+
+
+        // Task 3: Font size control
+        function changeFontSize(amount) {
+            const text = document.getElementById('textBlock');
+            const currentSize = parseInt(window.getComputedStyle(text).fontSize);
+            text.style.fontSize = (currentSize + amount) + 'px';
+        }
+
+        // Task 4: Clock
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerHTML = now.toLocaleString();
+        }
+        setInterval(updateClock, 1000);
+        updateClock(); // Initial call
+
+        // Reset Form after submission
+        function resetForm() {
+            document.getElementById("infoForm").reset();
+            document.getElementById('infoResult').innerHTML = "";
+        }
+    </script>
+
+</body>
+
+</html>
